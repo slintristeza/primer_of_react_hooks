@@ -1,24 +1,29 @@
-import React from 'react';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/storage';
+import React from 'react'
 
-const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
-}
+import { FirebaseAuth, signInWithRedirect, signOut, useFirebaseAuth } from './components/FirebaseAuth';
 
-const App: React.FC = () => {
+const Content: React.FC = () => {
+  const { userId, userName } = useFirebaseAuth()
   return (
     <div>
-      hoge
+      {userName} ({userId}) is signedIn
     </div>
-  );
+  )
 }
+
+const App: React.FC<{ history: History}> = ({ history }) => {
+  const NotSignedIn = React.useCallback(() => {
+    return <button onClick={() => signInWithRedirect()}>signIn</button>
+  }, []);
+  const Loading = React.useCallback(() => {
+    return <div>loading now...</div>;
+  }, []);
+  
+  return (
+    <FirebaseAuth NotSignedIn={NotSignedIn} Loading={Loading}>
+      <button onClick={signOut}>sign out</button>
+    </FirebaseAuth>
+  )
+};
 
 export default App;
