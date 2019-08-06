@@ -37,7 +37,7 @@ export const FirebaseAuth: React.FC<FirebaseAuthProps> = ({
   }
 };
 
-const signInWithRedirect = () => {
+export const signInWithRedirect = () => {
   const provider = new firebase.auth.GoogleAuthProvider()
   return firebase.auth().signInWithRedirect(provider)
 }
