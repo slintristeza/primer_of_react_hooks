@@ -14,8 +14,8 @@ export const Router: React.FC<RouterProps> = ({ history }) => {
     const unlisten = history!.listen(location => {
       setPathname(location.pathname);
     });
-  return unlisten;
-}, [history])
+    return unlisten;
+  }, [history])
 
   const content = React.useMemo(() => {
     if (pathname === '/') {
