@@ -1,14 +1,12 @@
 import React from 'react'
+import { History } from 'history';
 
-import { FirebaseAuth, signInWithRedirect, signOut, useFirebaseAuth } from './components/FirebaseAuth';
+import { FirebaseAuth, signInWithRedirect, signOut } from './components/FirebaseAuth';
 
-const Content: React.FC = () => {
-  const { userId, userName } = useFirebaseAuth()
-  return (
-    <div>
-      {userName} ({userId}) is signedIn
-    </div>
-  )
+import { Router } from './Router';
+
+const Content: React.FC<{ history: History}> = ({ history }) => {
+  return <Router history={history} />;
 }
 
 const App: React.FC<{ history: History}> = ({ history }) => {
@@ -21,6 +19,7 @@ const App: React.FC<{ history: History}> = ({ history }) => {
   
   return (
     <FirebaseAuth NotSignedIn={NotSignedIn} Loading={Loading}>
+      <Content history={history} />
       <button onClick={signOut}>sign out</button>
     </FirebaseAuth>
   )
