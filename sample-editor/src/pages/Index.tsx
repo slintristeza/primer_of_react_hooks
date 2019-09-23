@@ -1,26 +1,44 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useMemo } from 'react'
+import uuidv4 from 'uuidv4'
 
-import { firebase, FirebaseContext } from '../components/Firebase';
+import { Link } from '../Router'
+import { useAllDocuments } from '../FirebaseDatabase'
 
-const IndexPage = () => {
-  const [documents, setDocuments] = useState<any>({});
-  const { userId } = useContext(FirebaseContext);
-  const ref = firebase.database().ref(`users/${userId}/documents`);
-  useEffect(() => {
-    ref.on('value', snapshot => {
-      if (snapshot && snapshot.val()) {
-        setDocuments(snapshot.val());
-      }
-    });
-    return () => ref.off();
-  }, [ref]);
+const useDocumentLists = () => {
+  const { document: documents, loaded } = useAllDocuments()
 
-  const list = Object.keys(documents).map(textId => {
-    const title = documents[textId].split('¥n')[0];
-    return <li key={textId}>{title}</li>;
-  });
-
-  return <ul>{list}</ul>
+  // Document[]をJSXに変換しているのを、メモ化
+  return useMemo(() => {
+    if (!loaded) {
+      return <div>documents loading now</div>
+    }
+    if (!documents) {
+      return []
+    }
+    return Object.keys(documents).map(textId => {
+      const title = documents[textId].title
+      return (
+        <li key={textId}>
+          <Link as="a" href={`/${textId}`}>
+            {title}
+          </Link>
+        </li>
+      )
+    })
+  }, [documents, loaded])
 }
 
-export default IndexPage;
+const IndexPage = () => {
+  const list = useDocumentLists()
+
+  return (
+    <div>
+      <Link as="button" href={`/${uuidv4()}`}>
+        ページ作成
+      </Link>
+      <ul>{list}</ul>
+    </div>
+  )
+}
+
+export default IndexPage

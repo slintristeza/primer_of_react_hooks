@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Link } from '../Router';
-import { useDatabaseDocument } from '../components/FirebaseDatabase'
+import { useDatabaseDocument } from '../FirebaseDatabase'
 
 const Input = styled.textarea`
   width: 100%;

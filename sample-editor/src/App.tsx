@@ -1,7 +1,7 @@
 import React from 'react'
 import { History } from 'history';
 
-import { FirebaseAuth, signInWithRedirect, signOut } from './components/FirebaseAuth';
+import { FirebaseAuth, signInWithRedirect, signOut } from './FirebaseAuth';
 
 import { Router } from './Router';
 
