@@ -10,7 +10,7 @@
     "@types/react-dom": "16.8.5",
     "@types/styled-components": "^4.1.18",
     "@types/uuidv4": "^2.0.0",
-    "firebase": "^6.3.4",
+    "firebase": "^6.6.2",
     "history": "^4.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
